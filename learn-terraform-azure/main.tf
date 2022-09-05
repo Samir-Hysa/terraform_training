@@ -14,6 +14,16 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "myTFResourceGroup"
-  location = "eu-west"
+  name     = var.resource_group_name
+  location = "westeurope"
+}
+
+resource "azurerm_virtual_network" "vnet" {
+  name = "TFvnet"
+  address_space = ["10.0.0.0/16"]
+  location = "westeurope"
+  tags = {
+    By = "Terraform"
+  }
+  resource_group_name = azurerm_resource_group.rg.name
 }
